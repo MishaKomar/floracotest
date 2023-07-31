@@ -30,13 +30,14 @@ class StatisticsPage extends StatelessWidget {
                 children: [
                   Text(
                     'Period: ${state.periodLabel}',
-                    style: Theme.of(context).textTheme.bodyLarge,
+                    style: Theme.of(context).textTheme.displaySmall,
                   ),
                   const SizedBox(height: 4),
                   Text(
                     'Pregnant: ${state.pregnantLabel}',
-                    style: Theme.of(context).textTheme.bodyLarge,
+                    style: Theme.of(context).textTheme.displaySmall,
                   ),
+                  const SizedBox(height: 24),
                   ElevatedButton(
                     child: const Text('Clear'),
                     onPressed: () {

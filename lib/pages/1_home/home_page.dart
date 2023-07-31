@@ -32,9 +32,11 @@ class HomePage extends StatelessWidget {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ElevatedButton(
-                    child: const Text('Log period'),
-                    onPressed: () {
+                  ListTile(
+                    title: const Text('Track my period'),
+                    subtitle: const Text('Contraception and wellbeing'),
+                    trailing: const Icon(Icons.arrow_forward_ios),
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -45,10 +47,11 @@ class HomePage extends StatelessWidget {
                       );
                     },
                   ),
-                  const SizedBox(height: 4),
-                  ElevatedButton(
-                    child: const Text('Log pragnant'),
-                    onPressed: () {
+                  ListTile(
+                    title: const Text('Get pragnant'),
+                    subtitle: const Text('Learn about reproductive health'),
+                    trailing: const Icon(Icons.arrow_forward_ios),
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -59,10 +62,11 @@ class HomePage extends StatelessWidget {
                       );
                     },
                   ),
-                  const SizedBox(height: 4),
-                  ElevatedButton(
-                    child: const Text('Check stats'),
-                    onPressed: () {
+                  ListTile(
+                    title: const Text('Check statistics'),
+                    subtitle: const Text('More here...'),
+                    trailing: const Icon(Icons.arrow_forward_ios),
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(

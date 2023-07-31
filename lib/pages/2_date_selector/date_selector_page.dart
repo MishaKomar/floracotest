@@ -11,11 +11,32 @@ import 'date_selector_page_argument.dart';
 /// A [StatelessWidget] that:
 /// * demonstrates how to consume and interact with a [HomeBloc].
 /// {@endtemplate}
-class DateSelectorPage extends StatelessWidget {
+class DateSelectorPage extends StatefulWidget {
   final DateSelectorPageArgument arg;
 
   /// {@macro home_page}
   const DateSelectorPage({required this.arg, super.key});
+
+  @override
+  State<DateSelectorPage> createState() => _DateSelectorPageState();
+}
+
+class _DateSelectorPageState extends State<DateSelectorPage> {
+  late HomeBloc bloc;
+  DateTime selectedPeriod = DateTime.now();
+  DateTime selectedPregnant = DateTime.now();
+
+  @override
+  void initState() {
+    bloc = context.read<HomeBloc>();
+    if (bloc.state.period != null) {
+      selectedPeriod = bloc.state.period!;
+    }
+    if (bloc.state.pregnant != null) {
+      selectedPregnant = bloc.state.pregnant!;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,35 +51,72 @@ class DateSelectorPage extends StatelessWidget {
         child: Center(
           child: BlocBuilder<HomeBloc, HomeState>(
             builder: (BuildContext context, HomeState state) {
-              final type = arg.isPeriod ? 'period' : 'pregnant';
-              final initialDate = arg.isPeriod ? state.period : state.pregnant;
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Log in your $type date'),
-                  SizedBox(
-                    height: 100,
-                    child: CupertinoDatePicker(
-                      initialDateTime: initialDate ?? DateTime.now(),
-                      mode: CupertinoDatePickerMode.date,
-                      use24hFormat: true,
-                      onDateTimeChanged: (DateTime newDate) {
-                        final event = arg.isPeriod
-                            ? PeriodDateInput(newDate)
-                            : PregnantDateInput(newDate);
-
-                        context.read<HomeBloc>().add(event);
-                      },
+                  if (widget.arg.isPeriod) ...[
+                    Text(
+                      'Log in your period date',
+                      style: Theme.of(context).textTheme.displaySmall,
+                      textAlign: TextAlign.center,
                     ),
-                  ),
+                    const SizedBox(height: 24),
+                    SizedBox(
+                      height: 200,
+                      child: CupertinoDatePicker(
+                        initialDateTime: selectedPeriod,
+                        mode: CupertinoDatePickerMode.date,
+                        use24hFormat: true,
+                        onDateTimeChanged: (DateTime newPeriodDate) {
+                          setState(() {
+                            selectedPeriod = newPeriodDate;
+                          });
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                  ] else ...[
+                    Text(
+                      'Log in your pregnant date',
+                      style: Theme.of(context).textTheme.displaySmall,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 24),
+                    SizedBox(
+                      height: 200,
+                      child: CupertinoPicker(
+                        useMagnifier: true,
+                        itemExtent: 40,
+                        scrollController: FixedExtentScrollController(
+                          initialItem: selectedPregnant.year - 1970,
+                        ),
+                        onSelectedItemChanged: (int index) {
+                          setState(() {
+                            selectedPregnant = DateTime(index + 1970);
+                          });
+                        },
+                        children: List<Widget>.generate(130, (int index) {
+                          return Center(
+                            child: Text('${1970 + index}'),
+                          );
+                        }),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                  ],
                   ElevatedButton(
                     child: const Text('Log In'),
                     onPressed: () {
-                      final event = arg.isPeriod
-                          ? PeriodDateInput(DateTime.now())
-                          : PregnantDateInput(DateTime.now());
+                      if (widget.arg.isPeriod) {
+                        context
+                            .read<HomeBloc>()
+                            .add(PeriodDateInput(selectedPeriod));
+                      } else {
+                        context
+                            .read<HomeBloc>()
+                            .add(PregnantDateInput(selectedPregnant));
+                      }
 
-                      context.read<HomeBloc>().add(event);
                       Navigator.pop(context);
                     },
                   ),

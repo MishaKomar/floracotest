@@ -8,9 +8,7 @@ class HomeState {
   String? get periodLabel =>
       period != null ? '${period!.day}/${period!.month}/${period!.year}' : null;
 
-  String? get pregnantLabel => pregnant != null
-      ? '${pregnant!.day}/${pregnant!.month}/${pregnant!.year}'
-      : null;
+  String? get pregnantLabel => pregnant != null ? '${pregnant!.year}' : null;
 
   /// {@macro home_state}
   const HomeState({
