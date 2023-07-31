@@ -18,5 +18,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<PregnantDateInput>(
       (event, emit) => emit(state.copyWith(pregnant: event.date)),
     );
+    on<ClearDateInput>(
+      (event, emit) => emit(const HomeState()),
+    );
   }
 }

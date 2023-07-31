@@ -5,8 +5,12 @@ class HomeState {
   final DateTime? period;
   final DateTime? pregnant;
 
-  String? get periodLabel => period?.toString();
-  String? get pregnantLabel => pregnant?.toString();
+  String? get periodLabel =>
+      period != null ? '${period!.day}/${period!.month}/${period!.year}' : null;
+
+  String? get pregnantLabel => pregnant != null
+      ? '${pregnant!.day}/${pregnant!.month}/${pregnant!.year}'
+      : null;
 
   /// {@macro home_state}
   const HomeState({

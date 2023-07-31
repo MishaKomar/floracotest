@@ -1,8 +1,11 @@
+import 'package:floracotest/pages/2_date_selector/date_selector_page.dart';
+import 'package:floracotest/pages/2_date_selector/date_selector_page_argument.dart';
+import 'package:floracotest/pages/3_statistics/statistics_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/home_bloc.dart';
-import 'bloc/home_event.dart';
+// import 'bloc/home_event.dart';
 import 'bloc/home_state.dart';
 
 /// {@template home_page}
@@ -19,7 +22,7 @@ class HomePage extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/home.png"),
+            image: AssetImage('assets/images/home.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -29,38 +32,50 @@ class HomePage extends StatelessWidget {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'Period: ${state.periodLabel}',
-                    style: Theme.of(context).textTheme.displaySmall,
+                  ElevatedButton(
+                    child: const Text('Log period'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DateSelectorPage(
+                            arg: DateSelectorPageArgument(isPeriod: true),
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                  Text(
-                    'Pregnant: ${state.pregnantLabel}',
-                    style: Theme.of(context).textTheme.displaySmall,
+                  const SizedBox(height: 4),
+                  ElevatedButton(
+                    child: const Text('Log pragnant'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DateSelectorPage(
+                            arg: DateSelectorPageArgument(isPeriod: false),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 4),
+                  ElevatedButton(
+                    child: const Text('Check stats'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const StatisticsPage(),
+                        ),
+                      );
+                    },
                   ),
                 ],
               );
             },
           ),
         ),
-      ),
-      floatingActionButton: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          FloatingActionButton(
-            child: const Icon(Icons.add),
-            onPressed: () {
-              context.read<HomeBloc>().add(PeriodDateInput(DateTime.now()));
-            },
-          ),
-          const SizedBox(height: 4),
-          FloatingActionButton(
-            child: const Icon(Icons.remove),
-            onPressed: () {
-              context.read<HomeBloc>().add(PregnantDateInput(DateTime.now()));
-            },
-          ),
-        ],
       ),
     );
   }
