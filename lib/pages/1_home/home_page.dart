@@ -1,6 +1,6 @@
 import 'package:floracotest/base/widgets/flora_background.dart';
 import 'package:floracotest/pages/2_date_selector/date_selector_page.dart';
-import 'package:floracotest/pages/2_date_selector/date_selector_page_argument.dart';
+import 'package:floracotest/pages/2_date_selector/models/date_selector_page_argument.dart';
 import 'package:floracotest/pages/3_statistics/statistics_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
