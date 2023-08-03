@@ -5,7 +5,7 @@ import 'package:floracotest/pages/1_home/bloc/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'date_selector_page_argument.dart';
+import 'models/date_selector_page_argument.dart';
 import 'widgets/flora_date_picker.dart';
 import 'widgets/flora_title_text.dart';
 import 'widgets/flora_year_picker.dart';
@@ -51,27 +51,24 @@ class _DateSelectorPageState extends State<DateSelectorPage> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (widget.arg.isPeriod) ...[
-                    const FloraTitleText(title: 'Log in your period date'),
-                    const SizedBox(height: 24),
-                    FloraDatePicker(
-                      initialDateTime: selectedPeriod,
-                      onDateTimeChanged: (DateTime newDate) => setState(() {
-                        selectedPeriod = newDate;
-                      }),
-                    ),
-                    const SizedBox(height: 24),
-                  ] else ...[
-                    const FloraTitleText(title: 'Log in your pregnant date'),
-                    const SizedBox(height: 24),
-                    FloraYearPicker(
-                      initialDateTime: selectedPregnant,
-                      onDateTimeChanged: (DateTime newDate) => setState(() {
-                        selectedPregnant = newDate;
-                      }),
-                    ),
-                    const SizedBox(height: 24),
-                  ],
+                  FloraTitleText(
+                    title: widget.arg.isPeriod
+                        ? 'Log in your period date'
+                        : 'Log in your pregnant date',
+                  ),
+                  const SizedBox(height: 24),
+                  widget.arg.isPeriod
+                      ? FloraDatePicker(
+                          initialDateTime: selectedPeriod,
+                          onDateTimeChanged: (DateTime newDate) =>
+                              setState(() => selectedPeriod = newDate),
+                        )
+                      : FloraYearPicker(
+                          initialDateTime: selectedPregnant,
+                          onDateTimeChanged: (DateTime newDate) =>
+                              setState(() => selectedPregnant = newDate),
+                        ),
+                  const SizedBox(height: 24),
                   ElevatedButton(
                     child: const Text('Log In'),
                     onPressed: () {
