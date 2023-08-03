@@ -1,7 +1,8 @@
-import 'package:floracotest/pages/1_home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// import 'base/blocs/authentication_bloc.dart';
+import 'base/navigation/flora_router_delegate.dart';
 import 'pages/1_home/bloc/home_bloc.dart';
 
 /// {@template app}
@@ -17,12 +18,17 @@ class FloraCoTestApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        // BlocProvider<AuthenticationBloc>(
+        //   create: (BuildContext context) => AuthenticationBloc(),
+        // ),
         BlocProvider<HomeBloc>(
           create: (BuildContext context) => HomeBloc(),
         ),
       ],
-      child: const MaterialApp(
-        home: HomePage(),
+      child: MaterialApp(
+        home: Router(
+          routerDelegate: FloraCoRouterDelegate(),
+        ),
       ),
     );
   }

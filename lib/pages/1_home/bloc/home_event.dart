@@ -1,20 +1,20 @@
+import 'home_state.dart';
+
 /// Event being processed by [HomeBloc].
 abstract class HomeEvent {
   const HomeEvent();
 }
 
-/// Notifies bloc about period date state changes.
-class PeriodDateInput extends HomeEvent {
-  final DateTime date;
-  const PeriodDateInput(this.date);
+class LoginViaInput extends HomeEvent {
+  final LoginTypes type;
+  const LoginViaInput(this.type);
 }
 
-/// Notifies bloc about pregnant date state changes.
-class PregnantDateInput extends HomeEvent {
+class DateInput extends HomeEvent {
   final DateTime date;
-  const PregnantDateInput(this.date);
+  const DateInput(this.date);
 }
 
-class ClearDateInput extends HomeEvent {
-  const ClearDateInput();
-}
+class ClearDateInput extends HomeEvent {}
+
+class ClearInput extends HomeEvent {}

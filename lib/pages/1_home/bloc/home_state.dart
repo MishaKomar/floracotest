@@ -1,27 +1,41 @@
 /// {@template home_state}
 /// A simple state model for [HomeBloc].
 /// {@endtemplate}
+
+enum LoginTypes {
+  period,
+  pregnant,
+}
+
 class HomeState {
-  final DateTime? period;
-  final DateTime? pregnant;
+  final LoginTypes? type;
+  final DateTime? date;
 
-  String? get periodLabel =>
-      period != null ? '${period!.day}/${period!.month}/${period!.year}' : null;
+  String? get periodLabel => isPeriod && isDateSelected
+      ? '${date!.day}/${date!.month}/${date!.year}'
+      : null;
 
-  String? get pregnantLabel => pregnant != null ? '${pregnant!.year}' : null;
+  String? get pregnantLabel =>
+      isPregnant && isDateSelected ? '${date!.year}' : null;
+
+  bool get isPeriod => type == LoginTypes.period;
+  bool get isPregnant => type == LoginTypes.pregnant;
+
+  bool get loginTypeSelected => type != null;
+  bool get isDateSelected => date != null;
 
   /// {@macro home_state}
   const HomeState({
-    this.period,
-    this.pregnant,
+    this.type,
+    this.date,
   });
 
   HomeState copyWith({
-    DateTime? period,
-    DateTime? pregnant,
+    LoginTypes? type,
+    DateTime? date,
   }) =>
       HomeState(
-        period: period ?? this.period,
-        pregnant: pregnant ?? this.pregnant,
+        type: type ?? this.type,
+        date: date ?? this.date,
       );
 }

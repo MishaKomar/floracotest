@@ -5,7 +5,6 @@ import 'package:floracotest/pages/1_home/bloc/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'models/date_selector_page_argument.dart';
 import 'widgets/flora_date_picker.dart';
 import 'widgets/flora_title_text.dart';
 import 'widgets/flora_year_picker.dart';
@@ -15,10 +14,10 @@ import 'widgets/flora_year_picker.dart';
 /// * demonstrates how to consume and interact with a [HomeBloc].
 /// {@endtemplate}
 class DateSelectorPage extends StatefulWidget {
-  final DateSelectorPageArgument arg;
+  final LoginTypes type;
 
   /// {@macro home_page}
-  const DateSelectorPage({required this.arg, super.key});
+  const DateSelectorPage({required this.type, super.key});
 
   @override
   State<DateSelectorPage> createState() => _DateSelectorPageState();
@@ -26,17 +25,13 @@ class DateSelectorPage extends StatefulWidget {
 
 class _DateSelectorPageState extends State<DateSelectorPage> {
   late HomeBloc bloc;
-  DateTime selectedPeriod = DateTime.now();
-  DateTime selectedPregnant = DateTime.now();
+  DateTime selectedDate = DateTime.now();
 
   @override
   void initState() {
     bloc = context.read<HomeBloc>();
-    if (bloc.state.period != null) {
-      selectedPeriod = bloc.state.period!;
-    }
-    if (bloc.state.pregnant != null) {
-      selectedPregnant = bloc.state.pregnant!;
+    if (bloc.state.isDateSelected) {
+      selectedDate = bloc.state.date!;
     }
     super.initState();
   }
@@ -46,43 +41,35 @@ class _DateSelectorPageState extends State<DateSelectorPage> {
     return Scaffold(
       body: FloraBackground.date(
         child: Center(
+          // child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+          // builder: (BuildContext acontext, AuthenticationState authState) {
           child: BlocBuilder<HomeBloc, HomeState>(
             builder: (BuildContext context, HomeState state) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   FloraTitleText(
-                    title: widget.arg.isPeriod
+                    title: widget.type == LoginTypes.period
                         ? 'Log in your period date'
                         : 'Log in your pregnant date',
                   ),
                   const SizedBox(height: 24),
-                  widget.arg.isPeriod
+                  widget.type == LoginTypes.period
                       ? FloraDatePicker(
-                          initialDateTime: selectedPeriod,
+                          initialDateTime: selectedDate,
                           onDateTimeChanged: (DateTime newDate) =>
-                              setState(() => selectedPeriod = newDate),
+                              setState(() => selectedDate = newDate),
                         )
                       : FloraYearPicker(
-                          initialDateTime: selectedPregnant,
+                          initialDateTime: selectedDate,
                           onDateTimeChanged: (DateTime newDate) =>
-                              setState(() => selectedPregnant = newDate),
+                              setState(() => selectedDate = newDate),
                         ),
                   const SizedBox(height: 24),
                   ElevatedButton(
                     child: const Text('Log In'),
                     onPressed: () {
-                      if (widget.arg.isPeriod) {
-                        context
-                            .read<HomeBloc>()
-                            .add(PeriodDateInput(selectedPeriod));
-                      } else {
-                        context
-                            .read<HomeBloc>()
-                            .add(PregnantDateInput(selectedPregnant));
-                      }
-
-                      Navigator.pop(context);
+                      context.read<HomeBloc>().add(DateInput(selectedDate));
                     },
                   ),
                 ],
