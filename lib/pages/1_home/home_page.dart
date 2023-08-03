@@ -1,3 +1,4 @@
+import 'package:floracotest/base/widgets/flora_background.dart';
 import 'package:floracotest/pages/2_date_selector/date_selector_page.dart';
 import 'package:floracotest/pages/2_date_selector/date_selector_page_argument.dart';
 import 'package:floracotest/pages/3_statistics/statistics_page.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/home_bloc.dart';
 // import 'bloc/home_event.dart';
 import 'bloc/home_state.dart';
+import 'widgets/flora_list_tile.dart';
 
 /// {@template home_page}
 /// A [StatelessWidget] that:
@@ -19,23 +21,16 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/home.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
+      body: FloraBackground.home(
         child: Center(
           child: BlocBuilder<HomeBloc, HomeState>(
             builder: (BuildContext context, HomeState state) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ListTile(
-                    title: const Text('Track my period'),
-                    subtitle: const Text('Contraception and wellbeing'),
-                    trailing: const Icon(Icons.arrow_forward_ios),
+                  FloraListTile(
+                    title: 'Track my period',
+                    subtitle: 'Contraception and wellbeing',
                     onTap: () {
                       Navigator.push(
                         context,
@@ -47,10 +42,9 @@ class HomePage extends StatelessWidget {
                       );
                     },
                   ),
-                  ListTile(
-                    title: const Text('Get pragnant'),
-                    subtitle: const Text('Learn about reproductive health'),
-                    trailing: const Icon(Icons.arrow_forward_ios),
+                  FloraListTile(
+                    title: 'Get pragnant',
+                    subtitle: 'Learn about reproductive health',
                     onTap: () {
                       Navigator.push(
                         context,
@@ -62,10 +56,9 @@ class HomePage extends StatelessWidget {
                       );
                     },
                   ),
-                  ListTile(
-                    title: const Text('Check statistics'),
-                    subtitle: const Text('More here...'),
-                    trailing: const Icon(Icons.arrow_forward_ios),
+                  FloraListTile(
+                    title: 'Check statistics',
+                    subtitle: 'More here...',
                     onTap: () {
                       Navigator.push(
                         context,

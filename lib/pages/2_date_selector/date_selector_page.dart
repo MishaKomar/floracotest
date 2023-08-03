@@ -1,11 +1,14 @@
+import 'package:floracotest/base/widgets/flora_background.dart';
 import 'package:floracotest/pages/1_home/bloc/home_bloc.dart';
 import 'package:floracotest/pages/1_home/bloc/home_event.dart';
 import 'package:floracotest/pages/1_home/bloc/home_state.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'date_selector_page_argument.dart';
+import 'widgets/flora_date_picker.dart';
+import 'widgets/flora_title_text.dart';
+import 'widgets/flora_year_picker.dart';
 
 /// {@template home_page}
 /// A [StatelessWidget] that:
@@ -41,13 +44,7 @@ class _DateSelectorPageState extends State<DateSelectorPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/date.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
+      body: FloraBackground.date(
         child: Center(
           child: BlocBuilder<HomeBloc, HomeState>(
             builder: (BuildContext context, HomeState state) {
@@ -55,52 +52,23 @@ class _DateSelectorPageState extends State<DateSelectorPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   if (widget.arg.isPeriod) ...[
-                    Text(
-                      'Log in your period date',
-                      style: Theme.of(context).textTheme.displaySmall,
-                      textAlign: TextAlign.center,
-                    ),
+                    const FloraTitleText(title: 'Log in your period date'),
                     const SizedBox(height: 24),
-                    SizedBox(
-                      height: 200,
-                      child: CupertinoDatePicker(
-                        initialDateTime: selectedPeriod,
-                        mode: CupertinoDatePickerMode.date,
-                        use24hFormat: true,
-                        onDateTimeChanged: (DateTime newPeriodDate) {
-                          setState(() {
-                            selectedPeriod = newPeriodDate;
-                          });
-                        },
-                      ),
+                    FloraDatePicker(
+                      initialDateTime: selectedPeriod,
+                      onDateTimeChanged: (DateTime newDate) => setState(() {
+                        selectedPeriod = newDate;
+                      }),
                     ),
                     const SizedBox(height: 24),
                   ] else ...[
-                    Text(
-                      'Log in your pregnant date',
-                      style: Theme.of(context).textTheme.displaySmall,
-                      textAlign: TextAlign.center,
-                    ),
+                    const FloraTitleText(title: 'Log in your pregnant date'),
                     const SizedBox(height: 24),
-                    SizedBox(
-                      height: 200,
-                      child: CupertinoPicker(
-                        useMagnifier: true,
-                        itemExtent: 40,
-                        scrollController: FixedExtentScrollController(
-                          initialItem: selectedPregnant.year - 1970,
-                        ),
-                        onSelectedItemChanged: (int index) {
-                          setState(() {
-                            selectedPregnant = DateTime(index + 1970);
-                          });
-                        },
-                        children: List<Widget>.generate(130, (int index) {
-                          return Center(
-                            child: Text('${1970 + index}'),
-                          );
-                        }),
-                      ),
+                    FloraYearPicker(
+                      initialDateTime: selectedPregnant,
+                      onDateTimeChanged: (DateTime newDate) => setState(() {
+                        selectedPregnant = newDate;
+                      }),
                     ),
                     const SizedBox(height: 24),
                   ],

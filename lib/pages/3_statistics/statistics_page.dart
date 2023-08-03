@@ -1,3 +1,4 @@
+import 'package:floracotest/base/widgets/flora_background.dart';
 import 'package:floracotest/pages/1_home/bloc/home_bloc.dart';
 import 'package:floracotest/pages/1_home/bloc/home_event.dart';
 import 'package:floracotest/pages/1_home/bloc/home_state.dart';
@@ -15,13 +16,7 @@ class StatisticsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/stats.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
+      body: FloraBackground.statistics(
         child: Center(
           child: BlocBuilder<HomeBloc, HomeState>(
             builder: (BuildContext context, HomeState state) {
