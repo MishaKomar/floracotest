@@ -40,6 +40,7 @@ class FloraCoRouterDelegate extends RouterDelegate
 
             final bloc = context.read<HomeBloc>();
             final state = bloc.state;
+
             if (state.loginTypeSelected && state.isDateSelected) {
               bloc.add(ClearDateInput());
             } else {

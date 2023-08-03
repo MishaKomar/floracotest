@@ -41,8 +41,6 @@ class _DateSelectorPageState extends State<DateSelectorPage> {
     return Scaffold(
       body: FloraBackground.date(
         child: Center(
-          // child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-          // builder: (BuildContext acontext, AuthenticationState authState) {
           child: BlocBuilder<HomeBloc, HomeState>(
             builder: (BuildContext context, HomeState state) {
               return Column(

@@ -23,20 +23,17 @@ class StatisticsPage extends StatelessWidget {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (state.isPeriod) ...{
+                  if (state.isPeriod)
                     Text(
                       'Period: ${state.periodLabel}',
                       style: Theme.of(context).textTheme.displaySmall,
                     ),
-                    const SizedBox(height: 4),
-                  },
-                  if (state.isPregnant) ...{
+                  if (state.isPregnant)
                     Text(
                       'Pregnant: ${state.pregnantLabel}',
                       style: Theme.of(context).textTheme.displaySmall,
                     ),
-                    const SizedBox(height: 24),
-                  },
+                  const SizedBox(height: 24),
                   ElevatedButton(
                     child: const Text('Clear'),
                     onPressed: () {

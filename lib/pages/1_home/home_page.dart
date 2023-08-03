@@ -1,9 +1,5 @@
-// import 'package:floracotest/base/blocs/authentication_bloc.dart';
 import 'package:floracotest/base/widgets/flora_background.dart';
 import 'package:floracotest/pages/1_home/bloc/home_state.dart';
-// import 'package:floracotest/pages/2_date_selector/date_selector_page.dart';
-// import 'package:floracotest/pages/2_date_selector/models/date_selector_page_argument.dart';
-// import 'package:floracotest/pages/3_statistics/statistics_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,9 +20,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: FloraBackground.home(
         child: Center(
-          // child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           child: BlocBuilder<HomeBloc, HomeState>(
-            // builder: (BuildContext context, AuthenticationState state) {
             builder: (BuildContext context, HomeState state) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -34,52 +28,17 @@ class HomePage extends StatelessWidget {
                   FloraListTile(
                     title: 'Track my period',
                     subtitle: 'Contraception and wellbeing',
-                    onTap: () {
-                      context
-                          // .read<AuthenticationBloc>()
-                          .read<HomeBloc>()
-                          .add(const LoginViaInput(LoginTypes.period));
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => const DateSelectorPage(
-                      //       arg: DateSelectorPageArgument(isPeriod: true),
-                      //     ),
-                      //   ),
-                      // );
-                    },
+                    onTap: () => context
+                        .read<HomeBloc>()
+                        .add(const LoginViaInput(LoginTypes.period)),
                   ),
                   FloraListTile(
                     title: 'Get pragnant',
                     subtitle: 'Learn about reproductive health',
-                    onTap: () {
-                      context
-                          // .read<AuthenticationBloc>()
-                          .read<HomeBloc>()
-                          .add(const LoginViaInput(LoginTypes.pregnant));
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => const DateSelectorPage(
-                      //       arg: DateSelectorPageArgument(isPeriod: false),
-                      //     ),
-                      //   ),
-                      // );
-                    },
+                    onTap: () => context
+                        .read<HomeBloc>()
+                        .add(const LoginViaInput(LoginTypes.pregnant)),
                   ),
-                  // FloraListTile(
-                  //   title: 'Check statistics',
-                  //   subtitle: 'More here...',
-                  //   onTap: () {
-                  //     context.read<AuthenticationBloc>().add(UserLogoutEvent());
-                  //     // Navigator.push(
-                  //     //   context,
-                  //     //   MaterialPageRoute(
-                  //     //     builder: (context) => const StatisticsPage(),
-                  //     //   ),
-                  //     // );
-                  //   },
-                  // ),
                 ],
               );
             },
