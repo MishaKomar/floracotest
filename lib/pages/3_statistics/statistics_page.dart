@@ -35,7 +35,7 @@ class StatisticsPage extends StatelessWidget {
                     ),
                   const SizedBox(height: 24),
                   ElevatedButton(
-                    child: const Text('Clear'),
+                    child: const Text('Log out'),
                     onPressed: () {
                       context.read<HomeBloc>().add(ClearInput());
                     },

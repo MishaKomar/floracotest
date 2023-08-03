@@ -9,8 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FloraCoRouterDelegate extends RouterDelegate
     with ChangeNotifier, PopNavigatorRouterDelegateMixin {
-  bool showOtherPage = false;
-
   @override
   final GlobalKey<NavigatorState> navigatorKey;
 
